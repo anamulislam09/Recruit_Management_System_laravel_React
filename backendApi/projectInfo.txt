@@ -1,0 +1,27 @@
+		<-----------------Verify Account By Emai with JWT----------->
+https://www.section.io/engineering-education/implementing-laravel-queues/
+1.install jobs & queue :php artisan queue:table
+2.Go to .env and change QUEUE_CONNECTION=database form QUEUE_CONNECTION=synce
+3.run php artisan migrate
+4.create mail file :- php artisan make:mail VerifyUserMail
+5.Create jobs file :- php artisan make:job VerifyUserjobs
+6.Go to auth/AuthController and putting this code
+if($user){
+	$details = ['name' =>$user->name, 'email'=>$user-email, 'token'=>$user-token];
+	dispatch(new VerifyUserJobs($details);
+	}
+7.Go to jobs/VeryfiUserJobs and putting this code
+	protected $details
+
+go to construct method and putting this code
+	$this->details= $details
+go to handle method and putting this code
+	$data = new VerifyUserMail($this->details);
+	Mail::to($this->details[email']->send($data);
+
+8.go to Mail/VerifyUserMail and putting this code
+	public $details;
+	$this->details= $details under constructor method
+
+9. go to resource/views and create email/userVerify.blade.php file.
+10.go to email/VerifyUserMail and connect the userVerify file
